@@ -9,12 +9,23 @@ function gameon() {
     start = true;
     
 }
+
+function options() {
+    
+    option = true;
+    
+}
     
 var start = false;
+var option = false;
 
 <-- Need picture for main menu -->
 
-var menu = "<img scr = 'C:\\users\\username\\pictures\\picturename.png' alt = 'IS NOT WORKING' width = '300' length = '300' usemap = '#menu' /><map name = 'menu'><area shape = 'rect' coords = 'coordinate number' onclick = 'gameon()' alt = 'DOES NOT WORK!' /></map>"
+var menu = "<img scr = 'C:\\users\\username\\pictures\\picturename.png' alt = 'IS NOT WORKING' width = '300' length = '300' usemap = '#menu' />
+<map name = 'menu'>
+<area shape = 'rect' coords = 'coordinate number' onclick = 'gameon()' alt = 'DOES NOT WORK!' />
+<are shape = 'rect' coords = 'coordinate numbers' onclick = 'options()' alt = 'DOES NOT WORK!' />
+</map>"
 
 var player1 = {"
 person: 100;
@@ -32,6 +43,13 @@ if(start) {
     function to start game;
     
 }
+
+else if(option) {
+    
+    function to go to option screen;
+    
+}
+
 else {
     
     alert("ERROR");
