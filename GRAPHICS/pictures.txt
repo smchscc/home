@@ -1,0 +1,1 @@
+make sure all graphics include sprites go into this folder!
