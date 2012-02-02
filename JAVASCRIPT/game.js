@@ -4,7 +4,7 @@ window.onload = function() {
 	Crafty.canvas();
 	
 	//turn the sprite map into usable components
-	Crafty.sprite(16, "sprite.png", {
+	Crafty.sprite(16, "http://craftyjs.com/demos/tutorial/sprite.png", {
 		grass1: [0,0],
 		grass2: [1,0],
 		grass3: [2,0],
