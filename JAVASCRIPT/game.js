@@ -5,6 +5,7 @@ window.onload = function() {
 	
 	//turn the sprite map into usable components
 	Crafty.sprite(16, "http://craftyjs.com/demos/tutorial/sprite.png", {
+        
 		grass1: [0,0],
 		grass2: [1,0],
 		grass3: [2,0],
@@ -14,6 +15,25 @@ window.onload = function() {
 		bush2: [1,2],
 		player: [0,3]
 	});
+    Crafty.c  ("Human Infantry", {
+        _health: 90,
+        _speed: 7 ,
+        _damage: 30});
+        Crafty.c ("Alien Infantry", {
+            _health: 80,
+            _speed: 7,
+            _damage: 45});
+            Crafty.c ("Robot Infantry", {
+                _health: 100,
+                _speed: 7,
+                _damage: 25});
+                Crafty.c ("Void Infantry", {
+                    _health: 95,
+                    _speed: 7,
+                    _damage: 35});
+            
+        
+    
 	
 	//method to randomy generate the map
 	function generateWorld() {
