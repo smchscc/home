@@ -47,6 +47,22 @@ window.onload = function() {
                                     _health: 265,
                                     _speed: 5,
                                     _damage: 130});
+                                    Crafty.c ("Human Jet", {
+                                        _health: 155,
+                                        _speed: 10,
+                                        _damage: 230});
+                                        Crafty.c ("Alien Jet", {
+                                            _health: 130,
+                                            _speed: 10,
+                                            _damage: 255});
+                                            Crafty.c ("Robot Jet", {
+                                                _health: 190,
+                                                _speed: 10,
+                                                _damage: 210});
+                                                Crafty.c ("Void Jet", {
+                                                    _health: 170,
+                                                    _speed: 10,
+                                                    _damage: 240});
                             
                     
             
