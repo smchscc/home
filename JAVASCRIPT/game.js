@@ -31,6 +31,7 @@ window.onload = function() {
                     _health: 95,
                     _speed: 7,
                     _damage: 35});
+                    
             
         
     
