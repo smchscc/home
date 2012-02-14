@@ -31,6 +31,23 @@ window.onload = function() {
                     _health: 95,
                     _speed: 7,
                     _damage: 35});
+                    Crafty.c ("Human Tank", {
+                        _health: 250, 
+                        _speed: 5,
+                        _damage: 120});
+                        Crafty.c ("Alien Tank", {
+                            _health: 225,
+                            _speed: 5,
+                            _damage: 145});
+                            Crafty.c ("Robot Tank", {
+                                _health: 280,
+                                _speed: 5,
+                                _damage: 110});
+                                Crafty.c ("Void Tank", {
+                                    _health: 265,
+                                    _speed: 5,
+                                    _damage: 130});
+                            
                     
             
         
