@@ -18,82 +18,52 @@ window.onload = function() {
     Crafty.c  ("Human Infantry", {
         _health: 90,
         _speed: 7 ,
-        _damage: 30,
-        _reward: 200,
-        _cost: 300});
-        Crafty.c ("Alien Infantry", {
-            _health: 80,
-            _speed: 7,
-            _damage: 45,
-            _reward: 200,
-            _cost: 300});
-            Crafty.c ("Robot Infantry", {
-                _health: 100,
-                _speed: 7,
-                _damage: 25,
-                _reward: 200,
-                _cost: 300});
-                Crafty.c ("Void Infantry", {
-                    _health: 95,
-                    _speed: 7,
-                    _damage: 35,
-                    _reward: 200,
-                    _cost: 300});
-                    Crafty.c ("Human Tank", {
-                        _health: 250, 
-                        _speed: 5,
-                        _damage: 120,
-                        _reward: 500,
-                        _cost: 700});
-                        Crafty.c ("Alien Tank", {
-                            _health: 225,
-                            _speed: 5,
-                            _damage: 145,
-                            _reward: 500,
-                            _cost: 700});
-                            Crafty.c ("Robot Tank", {
-                                _health: 280,
-                                _speed: 5,
-                                _damage: 110,
-                                _reward: 500,
-                                _cost: 700});
-                                Crafty.c ("Void Tank", {
-                                    _health: 265,
-                                    _speed: 5,
-                                    _damage: 130,
-                                    _reward: 500,
-                                    _cost: 700});
-                                    Crafty.c ("Human Jet", {
-                                        _health: 155,
-                                        _speed: 10,
-                                        _damage: 230,
-                                        _reward: 800,
-                                        _cost: 1000});
-                                        Crafty.c ("Alien Jet", {
-                                            _health: 130,
-                                            _speed: 10,
-                                            _damage: 255,
-                                            _reward: 800,
-                                            _cost: 1000});
-                                            Crafty.c ("Robot Jet", {
-                                                _health: 190,
-                                                _speed: 10,
-                                                _damage: 210,
-                                                _reward: 800,
-                                                _cost: 1000});
-                                                Crafty.c ("Void Jet", {
-                                                    _health: 170,
-                                                    _speed: 10,
-                                                    _damage: 240,
-                                                    _reward: 800,
-                                                    _cost: 1000});
-                                                    
+        _damage: 30});
+    Crafty.c ("Alien Infantry", {
+        _health: 80,
+        _speed: 7,
+        _damage: 45});
+    Crafty.c ("Robot Infantry", {
+        _health: 100,
+        _speed: 7,
+        _damage: 25});
+    Crafty.c ("Void Infantry", {
+        _health: 95,
+        _speed: 7,
+        _damage: 35});
+    Crafty.c ("Human Tank", {
+        _health: 250, 
+        _speed: 5,
+        _damage: 120});
+    Crafty.c ("Alien Tank", {
+        _health: 225,
+        _speed: 5,
+        _damage: 145});
+    Crafty.c ("Robot Tank", {
+        _health: 280,
+        _speed: 5,
+        _damage: 110});
+    Crafty.c ("Void Tank", {
+        _health: 265,
+        _speed: 5,
+        _damage: 130});
+    Crafty.c ("Human Jet", {
+        _health: 155,
+        _speed: 10,
+        _damage: 230});
+    Crafty.c ("Alien Jet", {
+        _health: 130,
+        _speed: 10,
+        _damage: 255});
+    Crafty.c ("Robot Jet", {
+        _health: 190,
+        _speed: 10,
+        _damage: 210});
+    Crafty.c ("Void Jet", {
+        _health: 170,
+        _speed: 10,
+        _damage: 240});
                             
-                    
-            
-        
-    
-	
 	//method to randomy generate the map
 	function generateWorld() {
 		//generate the grass along the x-axis
