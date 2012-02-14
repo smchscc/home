@@ -15,55 +15,58 @@ window.onload = function() {
 		bush2: [1,2],
 		player: [0,3]
 	});
-    Crafty.c  ("Human Infantry", {
+    Crafty.c  ("HumanInfantry", {
         _health: 90,
         _speed: 7 ,
         _damage: 30});
-    Crafty.c ("Alien Infantry", {
+    Crafty.c ("AlienInfantry", {
         _health: 80,
         _speed: 7,
         _damage: 45});
-    Crafty.c ("Robot Infantry", {
+    Crafty.c ("RobotInfantry", {
         _health: 100,
         _speed: 7,
         _damage: 25});
-    Crafty.c ("Void Infantry", {
+    Crafty.c ("VoidInfantry", {
         _health: 95,
         _speed: 7,
         _damage: 35});
-    Crafty.c ("Human Tank", {
+    Crafty.c ("HumanTank", {
         _health: 250, 
         _speed: 5,
         _damage: 120});
-    Crafty.c ("Alien Tank", {
+    Crafty.c ("AlienTank", {
         _health: 225,
         _speed: 5,
         _damage: 145});
-    Crafty.c ("Robot Tank", {
+    Crafty.c ("RobotTank", {
         _health: 280,
         _speed: 5,
         _damage: 110});
-    Crafty.c ("Void Tank", {
+    Crafty.c ("VoidTank", {
         _health: 265,
         _speed: 5,
         _damage: 130});
-    Crafty.c ("Human Jet", {
+    Crafty.c ("HumanJet", {
         _health: 155,
         _speed: 10,
         _damage: 230});
-    Crafty.c ("Alien Jet", {
+    Crafty.c ("AlienJet", {
         _health: 130,
         _speed: 10,
         _damage: 255});
-    Crafty.c ("Robot Jet", {
+    Crafty.c ("RobotJet", {
         _health: 190,
         _speed: 10,
         _damage: 210});
-    Crafty.c ("Void Jet", {
+    Crafty.c ("VoidJet", {
         _health: 170,
         _speed: 10,
         _damage: 240});
                             
+    function generateMap() {
+   
+   }
 	//method to randomy generate the map
 	function generateWorld() {
 		//generate the grass along the x-axis
@@ -183,7 +186,4 @@ window.onload = function() {
 				this.stop();
 			}).onHit("wall_top", function() {
 				this.y += this._speed;
-				this.stop();
-			});
-	});
-};
+				t
