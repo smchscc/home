@@ -68,6 +68,9 @@ window.onload = function() {
             this.CustomControls(1);
     	} });
                             
+    function generateMap() {
+   
+   }
 	//method to randomy generate the map
 	function generateWorld() {
 		//generate the grass along the x-axis
@@ -180,7 +183,4 @@ window.onload = function() {
 				this.stop();
 			}).onHit("wall_top", function() {
 				this.y += this._speed;
-				this.stop();
-			});
-	});
-};
+				t
