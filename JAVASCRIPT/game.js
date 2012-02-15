@@ -15,54 +15,58 @@ window.onload = function() {
 		bush2: [1,2],
 		player: [0,3]
 	});
-    Crafty.c  ("Human Infantry", {
+    Crafty.c  ("HumanInfantry", {
         _health: 90,
         _speed: 7 ,
         _damage: 30});
-    Crafty.c ("Alien Infantry", {
+    Crafty.c ("AlienInfantry", {
         _health: 80,
         _speed: 7,
         _damage: 45});
-    Crafty.c ("Robot Infantry", {
+    Crafty.c ("RobotInfantry", {
         _health: 100,
         _speed: 7,
         _damage: 25});
-    Crafty.c ("Void Infantry", {
+    Crafty.c ("VoidInfantry", {
         _health: 95,
         _speed: 7,
         _damage: 35});
-    Crafty.c ("Human Tank", {
+    Crafty.c ("HumanTank", {
         _health: 250, 
         _speed: 5,
         _damage: 120});
-    Crafty.c ("Alien Tank", {
+    Crafty.c ("AlienTank", {
         _health: 225,
         _speed: 5,
         _damage: 145});
-    Crafty.c ("Robot Tank", {
+    Crafty.c ("RobotTank", {
         _health: 280,
         _speed: 5,
         _damage: 110});
-    Crafty.c ("Void Tank", {
+    Crafty.c ("VoidTank", {
         _health: 265,
         _speed: 5,
         _damage: 130});
-    Crafty.c ("Human Jet", {
+    Crafty.c ("HumanJet", {
         _health: 155,
         _speed: 10,
         _damage: 230});
-    Crafty.c ("Alien Jet", {
+    Crafty.c ("AlienJet", {
         _health: 130,
         _speed: 10,
         _damage: 255});
-    Crafty.c ("Robot Jet", {
+    Crafty.c ("RobotJet", {
         _health: 190,
         _speed: 10,
         _damage: 210});
-    Crafty.c ("Void Jet", {
+    Crafty.c ("VoidJet", {
         _health: 170,
         _speed: 10,
-        _damage: 240});
+        _damage: 240,
+        init: function() {
+            this.addComponent('2D, Canvas, flower, Controls, CustomControls');
+            this.CustomControls(1);
+    	} });
                             
 	//method to randomy generate the map
 	function generateWorld() {
@@ -74,16 +78,7 @@ window.onload = function() {
 				Crafty.e("2D, Canvas, grass"+grassType)
 					.attr({x: i * 16, y: j * 16});
 				
-				//1/50 chance of drawing a flower and only within the bushes
-				if(i > 0 && i < 24 && j > 0 && j < 19 && Crafty.randRange(0, 50) > 49) {
-					Crafty.e("2D, DOM, flower, Animate")
-						.attr({x: i * 16, y: j * 16})
-						.animate("wind", 0, 1, 3)
-						.bind("enterframe", function() {
-							if(!this.isPlaying())
-								this.animate("wind", 80);
-						});
-				}
+
 			}
 		}
 		
@@ -103,6 +98,8 @@ window.onload = function() {
 			Crafty.e("2D, Canvas, wall_right, bush"+Crafty.randRange(1,2))
 				.attr({x: 384, y: i * 16, z: 2});
 		}
+        Crafty.e("VoidJet")
+    				.attr({x: 32, y: 32});
 	}
 	
 	//the loading screen that will display while our assets load
@@ -123,7 +120,7 @@ window.onload = function() {
 	Crafty.scene("loading");
 	
 	Crafty.scene("main", function() {
-		generateWorld();
+		
 		
 		Crafty.c('CustomControls', {
 			__move: {left: false, right: false, up: false, down: false},	
@@ -145,7 +142,7 @@ window.onload = function() {
 				return this;
 			}
 		});
-		
+		generateWorld();
 		//create our player entity with some premade components
 		player = Crafty.e("2D, Canvas, player, Controls, CustomControls, Animate, Collision")
 			.attr({x: 160, y: 144, z: 1})
