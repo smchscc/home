@@ -22,7 +22,8 @@ window.onload = function() {
         addMoney: function(){} ,
         destroy: function(){},
         canMoveTo: function(){
-            });
+            
+            }});
     Crafty.c  ("HumanInfantry", {
         _health: 90,
         _speed: 7 ,
