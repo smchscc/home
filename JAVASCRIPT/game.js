@@ -1,10 +1,11 @@
 window.onload = function() {
     //start crafty
-	Crafty.init(600,600 );
+	Crafty.init(592,592);
 	Crafty.canvas();
 	
 	//turn the sprite map into usable components
 	Crafty.sprite(16, "http://craftyjs.com/demos/tutorial/sprite.png", {
+        
 		grass1: [0,0],
 		grass2: [1,0],
 		grass3: [2,0],
@@ -14,46 +15,102 @@ window.onload = function() {
 		bush2: [1,2],
 		player: [0,3]
 	});
-	
+    Crafty.c  ("Unit", {
+        _xPos : 0,
+        _yPos : 0,
+        deductHealth: function(){},
+        addMoney: function(){} ,
+        destroy: function(){},
+        canMoveTo: function(){
+            });
+    Crafty.c  ("HumanInfantry", {
+        _health: 90,
+        _speed: 7 ,
+        _damage: 30});
+    Crafty.c ("AlienInfantry", {
+        _health: 80,
+        _speed: 7,
+        _damage: 45});
+    Crafty.c ("RobotInfantry", {
+        _health: 100,
+        _speed: 7,
+        _damage: 25});
+    Crafty.c ("VoidInfantry", {
+        _health: 95,
+        _speed: 7,
+        _damage: 35});
+    Crafty.c ("HumanTank", {
+        _health: 250, 
+        _speed: 5,
+        _damage: 120});
+    Crafty.c ("AlienTank", {
+        _health: 225,
+        _speed: 5,
+        _damage: 145});
+    Crafty.c ("RobotTank", {
+        _health: 280,
+        _speed: 5,
+        _damage: 110});
+    Crafty.c ("VoidTank", {
+        _health: 265,
+        _speed: 5,
+        _damage: 130});
+    Crafty.c ("HumanJet", {
+        _health: 155,
+        _speed: 10,
+        _damage: 230});
+    Crafty.c ("AlienJet", {
+        _health: 130,
+        _speed: 10,
+        _damage: 255});
+    Crafty.c ("RobotJet", {
+        _health: 190,
+        _speed: 10,
+        _damage: 210});
+    Crafty.c ("VoidJet", {
+        _health: 170,
+        _speed: 10,
+        _damage: 240,
+        init: function() {
+            this.addComponent('2D, Canvas, flower, Controls, CustomControls');
+            this.CustomControls(1);
+    	} });
+                            
+    function generateMap() {
+   
+   }
 	//method to randomy generate the map
 	function generateWorld() {
 		//generate the grass along the x-axis
-		for(var i = 0; i < 25; i++) {
+		for(var i = 0; i < 37; i++) {
 			//generate the grass along the y-axis
-			for(var j = 0; j < 20; j++) {
+			for(var j = 0; j < 37; j++) {
 				grassType = Crafty.randRange(1, 4);
 				Crafty.e("2D, Canvas, grass"+grassType)
 					.attr({x: i * 16, y: j * 16});
 				
-				//1/50 chance of drawing a flower and only within the bushes
-				if(i > 0 && i < 24 && j > 0 && j < 19 && Crafty.randRange(0, 50) > 49) {
-					Crafty.e("2D, DOM, flower, Animate")
-						.attr({x: i * 16, y: j * 16})
-						.animate("wind", 0, 1, 3)
-						.bind("enterframe", function() {
-							if(!this.isPlaying())
-								this.animate("wind", 80);
-						});
-				}
+
 			}
 		}
 		
 		//create the bushes along the x-axis which will form the boundaries
-		for(var i = 0; i < 25; i++) {
+		for(var i = 0; i < 37; i++) {
 			Crafty.e("2D, Canvas, wall_top, bush"+Crafty.randRange(1,2))
 				.attr({x: i * 16, y: 0, z: 2});
 			Crafty.e("2D, DOM, wall_bottom, bush"+Crafty.randRange(1,2))
-				.attr({x: i * 16, y: 304, z: 2});
+				.attr({x: i * 16, y: 577, z: 2});
 		}
 		
 		//create the bushes along the y-axis
 		//we need to start one more and one less to not overlap the previous bushes
-		for(var i = 1; i < 19; i++) {
+		for(var i = 1; i < 37; i++) {
 			Crafty.e("2D, DOM, wall_left, bush"+Crafty.randRange(1,2))
 				.attr({x: 0, y: i * 16, z: 2});
 			Crafty.e("2D, Canvas, wall_right, bush"+Crafty.randRange(1,2))
-				.attr({x: 384, y: i * 16, z: 2});
+				.attr({x: 577, y: i * 16, z: 2});
 		}
+        Crafty.e("VoidJet")
+    				.attr({x: 32, y: 32});
 	}
 	
 	//the loading screen that will display while our assets load
@@ -74,7 +131,7 @@ window.onload = function() {
 	Crafty.scene("loading");
 	
 	Crafty.scene("main", function() {
-		generateWorld();
+		
 		
 		Crafty.c('CustomControls', {
 			__move: {left: false, right: false, up: false, down: false},	
@@ -96,7 +153,7 @@ window.onload = function() {
 				return this;
 			}
 		});
-		
+		generateWorld();
 		//create our player entity with some premade components
 		player = Crafty.e("2D, Canvas, player, Controls, CustomControls, Animate, Collision")
 			.attr({x: 160, y: 144, z: 1})
@@ -135,6 +192,6 @@ window.onload = function() {
 			}).onHit("wall_top", function() {
 				this.y += this._speed;
 				this.stop();
-			});
-	});
+            });
+      });
 };
