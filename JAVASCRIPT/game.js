@@ -15,6 +15,14 @@ window.onload = function() {
 		bush2: [1,2],
 		player: [0,3]
 	});
+    Crafty.c  ("Unit", {
+        _xPos : 0,
+        _yPos : 0,
+        deductHealth: function(){},
+        addMoney: function(){} ,
+        destroy: function(){},
+        canMoveTo: function(){
+            });
     Crafty.c  ("HumanInfantry", {
         _health: 90,
         _speed: 7 ,
@@ -182,16 +190,8 @@ window.onload = function() {
 				this.y -= this._speed;
 				this.stop();
 			}).onHit("wall_top", function() {
-<<<<<<< HEAD
-    			this.y += this._speed;
-				this.stop();
-			});
-	});
-};
-=======
 				this.y += this._speed;
 				this.stop();
             });
       });
 };
->>>>>>> b5ae116c6911ce8504fbc9d8af652eb71357093d
