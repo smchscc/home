@@ -182,5 +182,8 @@ window.onload = function() {
 				this.y -= this._speed;
 				this.stop();
 			}).onHit("wall_top", function() {
-				this.y += this._speed;
-				t
+    			this.y += this._speed;
+				this.stop();
+			});
+	});
+};
