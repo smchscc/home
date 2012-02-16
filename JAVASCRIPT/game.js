@@ -1,6 +1,6 @@
 window.onload = function() {
     //start crafty
-	Crafty.init(600,600 );
+	Crafty.init(592,592);
 	Crafty.canvas();
 	
 	//turn the sprite map into usable components
@@ -74,9 +74,9 @@ window.onload = function() {
 	//method to randomy generate the map
 	function generateWorld() {
 		//generate the grass along the x-axis
-		for(var i = 0; i < 25; i++) {
+		for(var i = 0; i < 37; i++) {
 			//generate the grass along the y-axis
-			for(var j = 0; j < 20; j++) {
+			for(var j = 0; j < 37; j++) {
 				grassType = Crafty.randRange(1, 4);
 				Crafty.e("2D, Canvas, grass"+grassType)
 					.attr({x: i * 16, y: j * 16});
@@ -86,20 +86,20 @@ window.onload = function() {
 		}
 		
 		//create the bushes along the x-axis which will form the boundaries
-		for(var i = 0; i < 25; i++) {
+		for(var i = 0; i < 37; i++) {
 			Crafty.e("2D, Canvas, wall_top, bush"+Crafty.randRange(1,2))
 				.attr({x: i * 16, y: 0, z: 2});
 			Crafty.e("2D, DOM, wall_bottom, bush"+Crafty.randRange(1,2))
-				.attr({x: i * 16, y: 304, z: 2});
+				.attr({x: i * 16, y: 577, z: 2});
 		}
 		
 		//create the bushes along the y-axis
 		//we need to start one more and one less to not overlap the previous bushes
-		for(var i = 1; i < 19; i++) {
+		for(var i = 1; i < 37; i++) {
 			Crafty.e("2D, DOM, wall_left, bush"+Crafty.randRange(1,2))
 				.attr({x: 0, y: i * 16, z: 2});
 			Crafty.e("2D, Canvas, wall_right, bush"+Crafty.randRange(1,2))
-				.attr({x: 384, y: i * 16, z: 2});
+				.attr({x: 577, y: i * 16, z: 2});
 		}
         Crafty.e("VoidJet")
     				.attr({x: 32, y: 32});
@@ -182,8 +182,16 @@ window.onload = function() {
 				this.y -= this._speed;
 				this.stop();
 			}).onHit("wall_top", function() {
+<<<<<<< HEAD
     			this.y += this._speed;
 				this.stop();
 			});
 	});
 };
+=======
+				this.y += this._speed;
+				this.stop();
+            });
+      });
+};
+>>>>>>> b5ae116c6911ce8504fbc9d8af652eb71357093d
