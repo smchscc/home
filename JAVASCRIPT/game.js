@@ -23,6 +23,9 @@ window.onload = function() {
         destroy: function(){},
         canMoveTo: function(){
 /*
+- hover over unit and click to make movable
+- click on a square within range, if enemy withing range, add attack option
+- confirm move prompt
  Pseudo-code to find possible boxes to move to           
 valid_spots = []
 
