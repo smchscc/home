@@ -22,7 +22,24 @@ window.onload = function() {
         addMoney: function(){} ,
         destroy: function(){},
         canMoveTo: function(){
-            
+/*
+ Pseudo-code to find possible boxes to move to           
+valid_spots = []
+
+for(i =1; i <= MAXSPEED; i++) // Current Max
+
+for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
+   x = x + i;
+   y = y + (speed - i);
+   if(!(x <0) && !(y < 0)){
+    valid_spots.push({x:x,y:y})}
+   x2 = x - i;
+   y2 = y - (speed - i);
+   
+   if(!(x2 <0) && !(y2 < 0)){
+	valid_spots.push({x:x2,y:y2})}
+}
+            */
             }});
     Crafty.c  ("HumanInfantry", {
         _health: 90,
