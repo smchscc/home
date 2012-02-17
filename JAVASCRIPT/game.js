@@ -22,6 +22,26 @@ window.onload = function() {
         addMoney: function(){} ,
         destroy: function(){},
         canMoveTo: function(){
+        var x = xPos - speed,
+        for (x < 0){
+            x++
+            }
+        var w = xPos + speed,
+        for (w > 20){
+            w--
+            }
+        var y = yPos - speed,
+        for (y < 0){
+            y++
+            }
+        var z = yPos + speed,
+        for (z > 20){
+            z--
+            }
+        highlight: function (){
+             
+        }
+        }
             });
     Crafty.c  ("HumanInfantry", {
         _health: 90,
