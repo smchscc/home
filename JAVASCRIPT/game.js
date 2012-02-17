@@ -22,6 +22,7 @@ window.onload = function() {
         addMoney: function(){} ,
         destroy: function(){},
         canMoveTo: function(){
+<<<<<<< HEAD
         var x = xPos - speed,
         for (x < 0){
             x++
@@ -43,6 +44,30 @@ window.onload = function() {
         }
         }
             });
+=======
+/*
+- hover over unit and click to make movable
+- click on a square within range, if enemy withing range, add attack option
+- confirm move prompt
+ Pseudo-code to find possible boxes to move to           
+valid_spots = []
+
+for(i =1; i <= MAXSPEED; i++) // Current Max
+
+for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
+   x = x + i;
+   y = y + (speed - i);
+   if(!(x <0) && !(y < 0)){
+    valid_spots.push({x:x,y:y})}
+   x2 = x - i;
+   y2 = y - (speed - i);
+   
+   if(!(x2 <0) && !(y2 < 0)){
+	valid_spots.push({x:x2,y:y2})}
+}
+            */
+            }});
+>>>>>>> 788c2dc20bcc08de6527739931883d44494901ad
     Crafty.c  ("HumanInfantry", {
         _health: 90,
         _speed: 7 ,
