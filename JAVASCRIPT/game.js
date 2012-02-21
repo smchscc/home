@@ -31,7 +31,7 @@ window.onload = function() {
               var x2 = xPos - i;
               var y2 = yPos - (speed - i);
               if(!(x2 <0) && !(y2 < 0)){
-                    valid_spots.push({x:x2,y:y2})}
+                valid_spots.push({x:x2,y:y2})}
              }  
             }
         }
