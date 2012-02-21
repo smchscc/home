@@ -21,7 +21,13 @@ window.onload = function() {
         deductHealth: function(){},
         addMoney: function(){} ,
         destroy: function(){},
+        isSelected: function(){
+            this.bind('Click', function() {
+			alert('Click');
+    		});
+        },
         canMoveTo: function(){
+            
 /*
 - hover over unit and click to make movable
 - click on a square within range, if enemy withing range, add attack option
@@ -90,11 +96,12 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
         _damage: 210});
     Crafty.c ("VoidJet", {
         _health: 170,
-        _speed: 10,
+        _speed: 40,
         _damage: 240,
         init: function() {
-            this.addComponent('2D, Canvas, flower, Controls, CustomControls');
-            this.CustomControls(1);
+            var jet = this;
+            this.addComponent('2D, Canvas, flower, Mouse');
+            this.bind("click",function(){jet.canMove = true});
     	} });
                             
     function generateMap() {
@@ -131,7 +138,8 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 				.attr({x: 577, y: i * 16, z: 2});
 		}
         Crafty.e("VoidJet")
-    				.attr({x: 32, y: 32});
+    				.attr({x: 32, y: 32})
+                    .bind("Click",function(){alert('Test')});
 	}
 	
 	//the loading screen that will display while our assets load
@@ -156,7 +164,7 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 		
 		Crafty.c('CustomControls', {
 			__move: {left: false, right: false, up: false, down: false},	
-			_speed: 3,
+			_speed: 40,
 			
 			CustomControls: function(speed) {
 				if(speed) this._speed = speed;
@@ -165,7 +173,7 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 				this.bind('enterframe', function() {
 					//move the player in a direction depending on the booleans
 					//only move the player in one direction at a time (up/down/left/right)
-					if(this.isDown("RIGHT_ARROW")) this.x += this._speed; 
+					if(this.isDown("RIGHT_ARROW") && this.canMove) this.x += this._speed; 
 					else if(this.isDown("LEFT_ARROW")) this.x -= this._speed; 
 					else if(this.isDown("UP_ARROW")) this.y -= this._speed;
 					else if(this.isDown("DOWN_ARROW")) this.y += this._speed;
@@ -176,7 +184,7 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 		});
 		generateWorld();
 		//create our player entity with some premade components
-		player = Crafty.e("2D, Canvas, player, Controls, CustomControls, Animate, Collision")
+		player = Crafty.e("2D, Canvas, player, Controls, CustomControls, Animate, Collision, VoidJet")
 			.attr({x: 160, y: 144, z: 1})
 			.CustomControls(1)
 			.animate("walk_left", 6, 3, 8)
