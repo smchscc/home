@@ -25,7 +25,7 @@ window.onload = function() {
             for (i = 0; i <= speed; i++){
              for (i = 0; i <= speed; i++){
               var x = xPos + i;
-              var y = yPos + (speed -i);
+              var y = yPos + (speed - i);
               if (!(x <0) && !(y < 0)){
                 valid_spots.push({x:x,y:y})}
               var x2 = xPos - i;
