@@ -22,26 +22,18 @@ window.onload = function() {
         addMoney: function(){} ,
         destroy: function(){},
         canMoveTo: function(){
-<<<<<<< HEAD
-        var x = xPos - speed,
-        for (x < 0){
-            x++
+            for (i = 0; i <= speed; i++){
+             for (i = 0; i <= speed; i++){
+              var x = xPos + i;
+              var y = yPos + (speed -i);
+              if (!(x <0) && !(y < 0)){
+                valid_spots.push({x:x,y:y})}
+                var x2 = x - i;
+                var y2 = y - (speed - i);
+                 if(!(x2 <0) && !(y2 < 0)){
+                    valid_spots.push({x:x2,y:y2})}
+             }  
             }
-        var w = xPos + speed,
-        for (w > 20){
-            w--
-            }
-        var y = yPos - speed,
-        for (y < 0){
-            y++
-            }
-        var z = yPos + speed,
-        for (z > 20){
-            z--
-            }
-        highlight: function (){
-             
-        }
         }
             });
 =======
