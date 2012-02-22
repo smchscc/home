@@ -1,6 +1,6 @@
 window.onload = function() {
     //start crafty
-	Crafty.init(592,592);
+    Crafty.init(592,592);
 	Crafty.canvas();
 	
 	//turn the sprite map into usable components
@@ -21,14 +21,23 @@ window.onload = function() {
         deductHealth: function(){},
         addMoney: function(){} ,
         destroy: function(){},
-        isSelected: function(){
-            this.bind('Click', function() {
-			alert('Click');
-    		});
-        },
-        canMoveTo: function(){
-            
+        canMoveTo: function(){}
+    }); 
 /*
+            for (i = 0; i <= speed; i++){
+             for (i = 0; i <= speed; i++){
+              var x = xPos + i;
+              var y = yPos + (speed - i);
+              if (!(x <0) && !(y < 0)){
+                valid_spots.push({x:x,y:y})}
+              var x2 = xPos - i;
+              var y2 = yPos - (speed - i);
+              if(!(x2 <0) && !(y2 < 0)){
+                valid_spots.push({x:x2,y:y2})}
+             }   
+            }
+        }
+            });
 - hover over unit and click to make movable
 - click on a square within range, if enemy withing range, add attack option
 - confirm move prompt
@@ -49,7 +58,6 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 	valid_spots.push({x:x2,y:y2})}
 }
             */
-            }});
     Crafty.c  ("HumanInfantry", {
         _health: 90,
         _speed: 7 ,
