@@ -182,9 +182,9 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 					//move the player in a direction depending on the booleans
 					//only move the player in one direction at a time (up/down/left/right)
 					if(this.isDown("RIGHT_ARROW") && this.canMove) this.x += this._speed; 
-					else if(this.isDown("LEFT_ARROW")) this.x -= this._speed; 
-					else if(this.isDown("UP_ARROW")) this.y -= this._speed;
-					else if(this.isDown("DOWN_ARROW")) this.y += this._speed;
+					else if(this.isDown("LEFT_ARROW") && this.canMove) this.x -= this._speed; 
+					else if(this.isDown("UP_ARROW") && this.canMove) this.y -= this._speed;
+					else if(this.isDown("DOWN_ARROW") && this.canMove) this.y += this._speed;
 				});
 				
 				return this;
