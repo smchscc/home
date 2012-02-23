@@ -200,7 +200,8 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 			.animate("walk_up", 3, 3, 5)
 			.animate("walk_down", 0, 3, 2)
 			.bind("enterframe", function(e) {
-				if(this.isDown("LEFT_ARROW")) {
+				if (this.canMove){
+                if(this.isDown("LEFT_ARROW")) {
 					if(!this.isPlaying("walk_left"))
 						this.stop().animate("walk_left", 10);
 				} else if(this.isDown("RIGHT_ARROW")) {
@@ -212,6 +213,7 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 				} else if(this.isDown("DOWN_ARROW")) {
 					if(!this.isPlaying("walk_down"))
 						this.stop().animate("walk_down", 10);
+				}
 				}
 			}).bind("keyup", function(e) {
 				this.stop();
