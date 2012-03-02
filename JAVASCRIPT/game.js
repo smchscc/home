@@ -1,6 +1,6 @@
 window.onload = function() {
     //start crafty
-    Crafty.init(592,592);
+    Crafty.init(600,600);
 	Crafty.canvas();
 	
 	//turn the sprite map into usable components
@@ -44,7 +44,7 @@ window.onload = function() {
  Pseudo-code to find possible boxes to move to           
 valid_spots = []
 
-for(i =1; i <= MAXSPEED; i++) // Current Max
+for(i =1; i <= MAXBLOCKS; i++) // Current Max
 
 for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
    x = x + i;
@@ -108,13 +108,56 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
         _damage: 240,
         init: function() {
             var jet = this;
-            this.addComponent('2D, Canvas, flower, Mouse');
-            this.bind("click",function(){jet.canMove = true});
-    	} });
-                            
-    function generateMap() {
-   
-   }
+            jet.addComponent("2D, Canvas, player, Mouse, Controls, CustomControls, Animate, Collision")
+    		.attr({x: 160, y: 144, z: 1})
+			.CustomControls(1)
+			.animate("walk_left", 6, 3, 8)
+			.animate("walk_right", 9, 3, 11)
+			.animate("walk_up", 3, 3, 5)
+			.animate("walk_down", 0, 3, 2)
+			.bind("enterframe", function(e) {
+				if (this.canMove){
+                    if(this.isDown("LEFT_ARROW")) {
+    					if(!this.isPlaying("walk_left"))
+    						this.stop().animate("walk_left", 10);
+    				} else if(this.isDown("RIGHT_ARROW")) {
+    					if(!this.isPlaying("walk_right"))
+    						this.stop().animate("walk_right", 10);
+    				} else if(this.isDown("UP_ARROW")) {
+    					if(!this.isPlaying("walk_up"))
+    						this.stop().animate("walk_up", 10);
+    				} else if(this.isDown("DOWN_ARROW")) {
+    					if(!this.isPlaying("walk_down"))
+    						this.stop().animate("walk_down", 10);
+    				}
+				}
+			}).bind("keyup", function(e) {
+				this.stop();
+			})
+			.collision()
+			.onHit("wall_left", function() {
+				this.x += jet._speed;
+				this.stop();
+			}).onHit("wall_right", function() {
+				this.x -= jet._speed;
+				this.stop();
+			}).onHit("wall_bottom", function() {
+				this.y -= jet._speed;
+				this.stop();
+			}).onHit("wall_top", function() {
+				this.y += jet._speed;
+				this.stop();
+            }).bind("click",function(){jet.canMove = !jet.canMove});
+    	},
+        toggleMovement: function(){
+                var jet = this;
+                jet.canMove = !jet.canMove;
+            },
+        moveToTile: function(column, row){
+            this.attr({x: column * 40, y: row *40, z: 1})
+            }
+    });
+
 	//method to randomy generate the map
 	function generateWorld() {
 		//generate the grass along the x-axis
@@ -124,8 +167,6 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 				grassType = Crafty.randRange(1, 4);
 				Crafty.e("2D, Canvas, grass"+grassType)
 					.attr({x: i * 16, y: j * 16});
-				
-
 			}
 		}
 		
@@ -145,9 +186,6 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 			Crafty.e("2D, Canvas, wall_right, bush"+Crafty.randRange(1,2))
 				.attr({x: 577, y: i * 16, z: 2});
 		}
-        Crafty.e("VoidJet")
-    				.attr({x: 32, y: 32})
-                    .bind("Click",function(){alert('Test')});
 	}
 	
 	//the loading screen that will display while our assets load
@@ -168,8 +206,6 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 	Crafty.scene("loading");
 	
 	Crafty.scene("main", function() {
-		
-		
 		Crafty.c('CustomControls', {
 			__move: {left: false, right: false, up: false, down: false},	
 			_speed: 40,
@@ -192,45 +228,61 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 		});
 		generateWorld();
 		//create our player entity with some premade components
-		player = Crafty.e("2D, Canvas, player, Controls, CustomControls, Animate, Collision, VoidJet")
-			.attr({x: 160, y: 144, z: 1})
-			.CustomControls(1)
-			.animate("walk_left", 6, 3, 8)
-			.animate("walk_right", 9, 3, 11)
-			.animate("walk_up", 3, 3, 5)
-			.animate("walk_down", 0, 3, 2)
-			.bind("enterframe", function(e) {
-				if (this.canMove){
-                if(this.isDown("LEFT_ARROW")) {
-					if(!this.isPlaying("walk_left"))
-						this.stop().animate("walk_left", 10);
-				} else if(this.isDown("RIGHT_ARROW")) {
-					if(!this.isPlaying("walk_right"))
-						this.stop().animate("walk_right", 10);
-				} else if(this.isDown("UP_ARROW")) {
-					if(!this.isPlaying("walk_up"))
-						this.stop().animate("walk_up", 10);
-				} else if(this.isDown("DOWN_ARROW")) {
-					if(!this.isPlaying("walk_down"))
-						this.stop().animate("walk_down", 10);
-				}
-				}
-			}).bind("keyup", function(e) {
-				this.stop();
-			})
-			.collision()
-			.onHit("wall_left", function() {
-				this.x += this._speed;
-				this.stop();
-			}).onHit("wall_right", function() {
-				this.x -= this._speed;
-				this.stop();
-			}).onHit("wall_bottom", function() {
-				this.y -= this._speed;
-				this.stop();
-			}).onHit("wall_top", function() {
-				this.y += this._speed;
-				this.stop();
-            });
-      });
-};
+       // player = Crafty.e("VoidJet");
+        //player2 = Crafty.e("VoidJet")
+          //  .attr({x: 180, y: 174, z: 1});
+        player3 = Crafty.e("VoidJet")
+            .attr({x: 90, y: 73, z: 1});
+            
+        player3.toggleMovement();
+//        player3.moveToTile(10,10);
+        
+        function whichBlock(x,y){
+            // Each block is 40x40 pixels
+            var column = Math.floor(x / 40);
+            var row = Math.floor(y / 40);
+            return {column: column, row: row};
+        };
+        function possibleBlocks(currentRow, currentColumn, maxBlocks){
+            var valid_spots = [];
+            for(currentMax =1; currentMax <= maxBlocks; currentMax++){
+                for(i=1; i <= currentMax; i++){
+                    var newColumn = currentColumn + i;
+                    var newRow = currentRow + (currentMax - i);
+                   if(!(newColumn <0) && !(newRow < 0)){
+                    valid_spots.push({row:newRow,column:newColumn});
+                    }
+                   newColumn = currentColumn - i;
+                   newRow = currentRow - (currentMax - i);
+                   if(!(newColumn <0) && !(newRow < 0)){
+                    valid_spots.push({row:newRow,column:newColumn});
+                    }
+                    newColumn = currentColumn + i;
+                   newRow = currentRow - (currentMax - i);
+                   if(!(newColumn <0) && !(newRow < 0)){
+                    valid_spots.push({row:newRow,column:newColumn});
+                    }
+                    newColumn = currentColumn - i;
+                   newRow = currentRow - (currentMax + i);
+                   if(!(newColumn <0) && !(newRow < 0)){
+                    valid_spots.push({row:newRow,column:newColumn});
+                    }
+                }
+            }
+            return valid_spots;
+        }
+        
+        Crafty.addEvent(this, Crafty.stage.elem, "mousedown", function(e) {
+            block = whichBlock(e.realX, e.realY);
+            alert("Block is at row:" + block.row + " column:" + block.column);
+            
+            var possibleSpots = possibleBlocks(block.row, block.column, 4);
+            var spotsAsString = "";
+            for(i=0;i<possibleSpots.length;i++){
+                spotsAsString+= "Row: " + possibleSpots[i].row + " Column: " + possibleSpots[i].column + "\n";
+            }
+            alert("Possible spots\n" + spotsAsString);
+    	});
+	});
+};        
+        
