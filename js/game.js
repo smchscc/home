@@ -1,6 +1,6 @@
 window.onload = function() {
     //start crafty
-    Crafty.init(600,600);
+    Crafty.init(599,599);
 	Crafty.canvas();
 	
 	//turn the sprite map into usable components
@@ -173,18 +173,18 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 		//create the bushes along the x-axis which will form the boundaries
 		for(var i = 0; i < 37; i++) {
 			Crafty.e("2D, Canvas, wall_top, bush"+Crafty.randRange(1,2))
-				.attr({x: i * 16, y: 0, z: 2});
+				.attr({x: i * 40, y: 0, z: 2});
 			Crafty.e("2D, DOM, wall_bottom, bush"+Crafty.randRange(1,2))
-				.attr({x: i * 16, y: 577, z: 2});
+				.attr({x: i * 40, y: 560, z: 2});
 		}
 		
 		//create the bushes along the y-axis
 		//we need to start one more and one less to not overlap the previous bushes
 		for(var i = 1; i < 37; i++) {
 			Crafty.e("2D, DOM, wall_left, bush"+Crafty.randRange(1,2))
-				.attr({x: 0, y: i * 16, z: 2});
+				.attr({x: 0, y: i * 40, z: 2});
 			Crafty.e("2D, Canvas, wall_right, bush"+Crafty.randRange(1,2))
-				.attr({x: 577, y: i * 16, z: 2});
+				.attr({x: 560, y: i * 40, z: 2});
 		}
 	}
 	
