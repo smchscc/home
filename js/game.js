@@ -228,11 +228,11 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 		});
 		generateWorld();
 		//create our player entity with some premade components
-       // player = Crafty.e("VoidJet");
-        //player2 = Crafty.e("VoidJet")
-          //  .attr({x: 180, y: 174, z: 1});
+        //player = Crafty.e("VoidJet");
+        player2 = Crafty.e("VoidJet")
+            .attr({x: 180, y: 174, z: 1});
         player3 = Crafty.e("VoidJet")
-            .attr({x: 90, y: 73, z: 1});
+            .attr({x: 90, y: 40, z: 1});
             
         player3.toggleMovement();
 //        player3.moveToTile(10,10);
@@ -243,6 +243,7 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
             var row = Math.floor(y / 40);
             return {column: column, row: row};
         };
+        
         function possibleBlocks(currentRow, currentColumn, maxBlocks){
             var valid_spots = [];
             for(currentMax =1; currentMax <= maxBlocks; currentMax++){
@@ -273,7 +274,15 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
         }
         
         Crafty.addEvent(this, Crafty.stage.elem, "mousedown", function(e) {
-            block = whichBlock(e.realX, e.realY);
+            
+            var block = whichBlock(e.realX, e.realY);
+            var player3location = whichBlock(player3._x, player3._y);
+            
+            if(player3location.column == block.column && player3location.row == block.row){
+                alert("You clicked on player 3");
+            }
+            
+            if (player3location == block)
             alert("Block is at row:" + block.row + " column:" + block.column);
             
             var possibleSpots = possibleBlocks(block.row, block.column, 4);
