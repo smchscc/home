@@ -14,6 +14,7 @@ window.onload = function() {
 		bush1: [0,2],
 		bush2: [1,2],
 		player: [0,4]
+        //note for graphics, the images of the alien head need to be moved down by one pixle in the sprite40.png file, a black pixle apears beneath each bush and the black outline of the alien head is cut off when it is facing up
 	});
     Crafty.c  ("Unit", {
         _xPos : 0,
