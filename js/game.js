@@ -275,6 +275,7 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
         
         Crafty.addEvent(this, Crafty.stage.elem, "mousedown", function(e) {
             block = whichBlock(e.realX, e.realY);
+            player3;
             alert("Block is at row:" + block.row + " column:" + block.column);
             
             var possibleSpots = possibleBlocks(block.row, block.column, 4);
