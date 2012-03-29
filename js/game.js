@@ -230,13 +230,24 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 		generateWorld();
 		//create our player entity with some premade components
         //player = Crafty.e("VoidJet");
-        player2 = Crafty.e("VoidJet")
-            .attr({x: 180, y: 174, z: 1});
-        player3 = Crafty.e("VoidJet")
-            .attr({x: 90, y: 40, z: 1});
+        var unitsOnBoard = [];
+        
+        function newUnit(first,second,race) {
             
-        player3.toggleMovement();
-//        player3.moveToTile(10,10);
+            var unit = Crafty.e(race)
+            .attr({x: first, y: second, z: 1});
+            unitsOnBoard.push(unit);
+        }
+        
+        
+        var x = 150;
+        var y = 150;
+        for(count = 0; count <= 20; count++){
+            newUnit(x,y,"VoidJet");
+            x += 10;
+            y += 10;
+        }
+           
         
         function whichBlock(x,y){
             // Each block is 40x40 pixels
