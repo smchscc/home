@@ -1,4 +1,4 @@
-window.onload = function() {
+ window.onload = function() {
     //start crafty
     Crafty.init(599,599);
 	Crafty.canvas();
@@ -275,10 +275,8 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
         }
         
         Crafty.addEvent(this, Crafty.stage.elem, "mousedown", function(e) {
-<<<<<<< HEAD
             block = whichBlock(e.realX, e.realY);
             player3;
-=======
             
             var block = whichBlock(e.realX, e.realY);
             var player3location = whichBlock(player3._x, player3._y);
@@ -288,7 +286,6 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
             }
             
             if (player3location == block)
->>>>>>> 5a767aa84b43705be39a8d627cd84fd7fec1b3d5
             alert("Block is at row:" + block.row + " column:" + block.column);
             
             var possibleSpots = possibleBlocks(block.row, block.column, 4);
