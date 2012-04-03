@@ -112,24 +112,12 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
             jet.addComponent("2D, Canvas, player, Mouse, Controls, CustomControls, Animate, Collision")
     		.attr({x: 160, y: 144, z: 1})
 			.CustomControls(1)
-			.animate("walk_left", 6, 3, 8)
-			.animate("walk_right", 9, 3, 11)
-			.animate("walk_up", 3, 3, 5)
-			.animate("walk_down", 0, 3, 2)
 			.bind("enterframe", function(e) {
 				if (this.canMove){
                     if(this.isDown("LEFT_ARROW")) {
-    					if(!this.isPlaying("walk_left"))
-    						this.stop().animate("walk_left", 10);
     				} else if(this.isDown("RIGHT_ARROW")) {
-    					if(!this.isPlaying("walk_right"))
-    						this.stop().animate("walk_right", 10);
     				} else if(this.isDown("UP_ARROW")) {
-    					if(!this.isPlaying("walk_up"))
-    						this.stop().animate("walk_up", 10);
     				} else if(this.isDown("DOWN_ARROW")) {
-    					if(!this.isPlaying("walk_down"))
-    						this.stop().animate("walk_down", 10);
     				}
 				}
 			}).bind("keyup", function(e) {
