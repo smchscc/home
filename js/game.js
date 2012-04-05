@@ -236,6 +236,15 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
             y += 10;
         }
            
+        function removeUnit(x) {
+            
+           Crafty.destroy(x);
+            
+        };
+        
+        removeUnit(unitsOnBoard[19]);
+        
+        
         
         function whichBlock(x,y){
             // Each block is 40x40 pixels
