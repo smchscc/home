@@ -220,33 +220,35 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
         //player = Crafty.e("VoidJet");
         var unitsOnBoard = [];
         
-        function newUnit(first,second,race) {
+        function newUnit(row,column,race) {
             
+            var location = blockToPixels(row, column);
             var unit = Crafty.e(race)
-            .attr({x: first, y: second, z: 1});
+            .attr({x: location.x, y: location.y, z: 1});
             unitsOnBoard.push(unit);
         }
         
-        
-        var x = 150;
-        var y = 150;
-        for(count = 0; count <= 20; count++){
-            newUnit(x,y,"VoidJet");
-            x += 10;
-            y += 10;
+        function removeUnitByIndex(x){    
+            unitsOnBoard[x].destroy();
         }
-           
-        function removeUnit(x) {
-            
-           Crafty.destroy(x);
-            
+        
+        var x = 1;
+        var y = 1;
+        for(count = 0; count <= 5; count++){
+            newUnit(x,y,"VoidJet");
+            x += 1;
+            y += 1;
+        }
+
+        removeUnitByIndex(4);
+        
+        function blockToPixels(row,column){
+            var x = column * 40;
+            var y = row * 40;
+            return {x:x, y:y};
         };
         
-        removeUnit(unitsOnBoard[19]);
-        
-        
-        
-        function whichBlock(x,y){
+        function pixelsToBlock(x,y){
             // Each block is 40x40 pixels
             var column = Math.floor(x / 40);
             var row = Math.floor(y / 40);
@@ -283,11 +285,11 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
         }
         
         Crafty.addEvent(this, Crafty.stage.elem, "mousedown", function(e) {
-            block = whichBlock(e.realX, e.realY);
+            block = pixelsToBlock(e.realX, e.realY);
             player3;
             
-            var block = whichBlock(e.realX, e.realY);
-            var player3location = whichBlock(player3._x, player3._y);
+            var block = pixelsToBlock(e.realX, e.realY);
+            var player3location = pixelsToBlock(player3._x, player3._y);
             
             if(player3location.column == block.column && player3location.row == block.row){
                 alert("You clicked on player 3");
