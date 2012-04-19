@@ -221,7 +221,6 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
         var unitsOnBoard = [];
         
         function newUnit(row,column,race) {
-            
             var location = blockToPixels(row, column);
             var unit = Crafty.e(race)
             .attr({x: location.x, y: location.y, z: 1});
@@ -230,6 +229,12 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
         
         function removeUnitByIndex(x){    
             unitsOnBoard[x].destroy();
+            unitsOnBoard.splice(x,1);
+        }
+        
+        function moveUnitByIndex(x){    
+            var workingWith = unitsOnBoard[x];
+            workingWith.moveToTile(10,10);
         }
         
         var x = 1;
@@ -239,8 +244,12 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
             x += 1;
             y += 1;
         }
+<<<<<<< HEAD
+        moveUnitByIndex(3);
+=======
 
         removeUnitByIndex(4);
+>>>>>>> dd9de3de3f37aa34f94f99b42012b14fd65af6f9
         
         function blockToPixels(row,column){
             var x = column * 40;
