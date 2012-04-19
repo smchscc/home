@@ -307,4 +307,3 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
     	});
 	});
 };        
-        
