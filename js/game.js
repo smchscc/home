@@ -244,7 +244,12 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
             x += 1;
             y += 1;
         }
+<<<<<<< HEAD
         moveUnitByIndex(3);
+=======
+
+        removeUnitByIndex(4);
+>>>>>>> dd9de3de3f37aa34f94f99b42012b14fd65af6f9
         
         function blockToPixels(row,column){
             var x = column * 40;
