@@ -1,4 +1,4 @@
-window.onload = function() {
+ window.onload = function() {
     //start crafty
     Crafty.init(599,599);
 	Crafty.canvas();
@@ -318,4 +318,3 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
     	});
 	});
 };        
-        
