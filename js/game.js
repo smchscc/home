@@ -246,6 +246,8 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
             y += 1;
         }
         moveUnitByIndex(3,9,10);
+        var gameStateLabel = Crafty.e("2D, DOM, Text").attr({ x: 450, y: 510 });
+        
         
         function blockToPixels(row,column){
             var x = column * 40;
@@ -259,6 +261,26 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
             var row = Math.floor(y / 40);
             return {column: column, row: row};
         };
+        
+        function changeLabel(x) {
+            switch(x) {
+                case "move" : 
+                    return "MOVE UNIT.";
+                break;
+                case "attack" : 
+                    return "ATTACK UNIT.";
+                break;
+                case "buy" : 
+                    return "BUILT UNIT.";
+                break;
+                case "capture" : 
+                    return "CAPTURED BASE.";
+                break;
+                default : 
+                    return "READY.";
+                break;
+            }
+        }
         
         function possibleBlocks(currentRow, currentColumn, maxBlocks){
             var valid_spots = [];
@@ -300,11 +322,13 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
                     if(currentUnitBlock.column == blockClickedOn.column && currentUnitBlock.row == blockClickedOn.row){
                         gameState.selectedUnit = currentIndex;
                         gameState.action = "move";
+                        gameStateLabel.text(changeLabel(gameState.action));
                     }
                 }
             } else if(gameState.action == "move"){
                 moveUnitByIndex(gameState.selectedUnit, blockClickedOn.column, blockClickedOn.row);
                 gameState.action = "";
+                gameStateLabel.text(changeLabel(gameState.action));
             }
             
             /*
