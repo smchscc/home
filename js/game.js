@@ -1,21 +1,8 @@
  window.onload = function() {
     //start crafty
-    Crafty.init(599,599);
+    Crafty.init(800,600);
 	Crafty.canvas();
-	
-	//turn the sprite map into usable components
-	Crafty.sprite(40, "img/sprite40.png", {
-        
-		grass1: [0,0],
-		grass2: [1,0],
-		grass3: [2,0],
-		grass4: [3,0],
-		flower: [0,1],
-		bush1: [0,2],
-		bush2: [1,2],
-		player: [0,4]
-        //note for graphics, the images of the alien head need to be moved down by one pixle in the sprite40.png file, a black pixle apears beneath each bush and the black outline of the alien head is cut off when it is facing up
-	});
+
     Crafty.c  ("Unit", {
         _xPos : 0,
         _yPos : 0,
@@ -148,19 +135,20 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
     });
 
 	//method to randomy generate the map
+    /*
 	function generateWorld() {
 		//generate the grass along the x-axis
-		for(var i = 0; i < 37; i++) {
+		for(var i = 0; i < 15; i++) {
 			//generate the grass along the y-axis
-			for(var j = 0; j < 37; j++) {
+			for(var j = 0; j < 15; j++) {
 				grassType = Crafty.randRange(1, 4);
 				Crafty.e("2D, Canvas, grass"+grassType)
-					.attr({x: i * 16, y: j * 16});
+					.attr({x: i * 40, y: j * 40});
 			}
 		}
 		
 		//create the bushes along the x-axis which will form the boundaries
-		for(var i = 0; i < 37; i++) {
+		for(var i = 0; i < 15; i++) {
 			Crafty.e("2D, Canvas, wall_top, bush"+Crafty.randRange(1,2))
 				.attr({x: i * 40, y: 0, z: 2});
 			Crafty.e("2D, DOM, wall_bottom, bush"+Crafty.randRange(1,2))
@@ -169,19 +157,20 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 		
 		//create the bushes along the y-axis
 		//we need to start one more and one less to not overlap the previous bushes
-		for(var i = 1; i < 37; i++) {
+		for(var i = 1; i < 15; i++) {
 			Crafty.e("2D, DOM, wall_left, bush"+Crafty.randRange(1,2))
 				.attr({x: 0, y: i * 40, z: 2});
 			Crafty.e("2D, Canvas, wall_right, bush"+Crafty.randRange(1,2))
 				.attr({x: 560, y: i * 40, z: 2});
 		}
-	}
+	}*/
 	
 	//the loading screen that will display while our assets load
 	Crafty.scene("loading", function() {
 		//load takes an array of assets and a callback when complete
-		Crafty.load(["sprite.png"], function() {
+		Crafty.load(["img/grid/attackgrid.png"], function() {
 			Crafty.scene("main"); //when everything is loaded, run the main scene
+            Crafty.background("./img/grid/attackgrid.png");
 		});
 		
 		//black background with some loading text
@@ -215,7 +204,8 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 				return this;
 			}
 		});
-		generateWorld();
+        
+		//generateWorld();
 		//create our player entity with some premade components
         //player = Crafty.e("VoidJet");
         var unitsOnBoard = [],
@@ -224,7 +214,7 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
         function newUnit(row,column,race) {
             var location = blockToPixels(row, column);
             var unit = Crafty.e(race)
-            .attr({x: location.x, y: location.y, z: 1});
+            .attr({x: location.x, y: location.y, z: 2});
             unitsOnBoard.push(unit);
         }
         
@@ -235,7 +225,10 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
         
         function moveUnitByIndex(index,column,row){    
             var workingWith = unitsOnBoard[index];
-            workingWith.moveToTile(column,row);
+            if(column <= 15 && row <= 15){
+                workingWith.moveToTile(column,row);
+            }
+        
         }
         
         var x = 1;
@@ -300,6 +293,7 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
                     if(currentUnitBlock.column == blockClickedOn.column && currentUnitBlock.row == blockClickedOn.row){
                         gameState.selectedUnit = currentIndex;
                         gameState.action = "move";
+                        Crafty.e("2D, DOM, Text").attr({ x: 100, y: 100 }).text("Move mode activated.");
                     }
                 }
             } else if(gameState.action == "move"){
