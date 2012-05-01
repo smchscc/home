@@ -2,6 +2,17 @@
     //start crafty
     Crafty.init(800,600);
 	Crafty.canvas();
+    Crafty.sprite(40, "img/sprite40.png", {
+        grass1: [0,0],
+        grass2: [1,0],
+        grass3: [2,0],
+        grass4: [3,0],
+        flower: [0,1],
+        bush1: [0,2],
+        bush2: [1,2],
+        player: [0,4]
+        //note for graphics, the images of the alien head need to be moved down by one pixle in the sprite40.png file, a black pixle apears beneath each bush and the black outline of the alien head is cut off when it is facing up
+    });
 
     Crafty.c  ("Unit", {
         _xPos : 0,
@@ -11,41 +22,6 @@
         destroy: function(){},
         canMoveTo: function(){}
     }); 
-/*
-            for (i = 0; i <= speed; i++){
-             for (i = 0; i <= speed; i++){
-              var x = xPos + i;
-              var y = yPos + (speed - i);
-              if (!(x <0) && !(y < 0)){
-                valid_spots.push({x:x,y:y})}
-              var x2 = xPos - i;
-              var y2 = yPos - (speed - i);
-              if(!(x2 <0) && !(y2 < 0)){
-                valid_spots.push({x:x2,y:y2})}
-             }   
-            }
-        }
-            });
-- hover over unit and click to make movable
-- click on a square within range, if enemy withing range, add attack option
-- confirm move prompt
- Pseudo-code to find possible boxes to move to           
-valid_spots = []
-
-for(i =1; i <= MAXBLOCKS; i++) // Current Max
-
-for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
-   x = x + i;
-   y = y + (speed - i);
-   if(!(x <0) && !(y < 0)){
-    valid_spots.push({x:x,y:y})}
-   x2 = x - i;
-   y2 = y - (speed - i);
-   
-   if(!(x2 <0) && !(y2 < 0)){
-	valid_spots.push({x:x2,y:y2})}
-}
-            */
     Crafty.c  ("HumanInfantry", {
         _health: 90,
         _speed: 7 ,
@@ -96,9 +72,8 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
         _damage: 240,
         init: function() {
             var jet = this;
-            jet.addComponent("2D, Canvas, player, Mouse, Controls, CustomControls, Animate, Collision")
+            jet.addComponent("2D, Canvas, player, Mouse, Controls, Animate, Collision")
     		.attr({x: 160, y: 144, z: 1})
-			.CustomControls(1)
 			.bind("enterframe", function(e) {
 				if (this.canMove){
                     if(this.isDown("LEFT_ARROW")) {
@@ -133,45 +108,14 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
             this.attr({x: column * 40, y: row *40, z: 1})
             }
     });
-
-	//method to randomy generate the map
-    /*
-	function generateWorld() {
-		//generate the grass along the x-axis
-		for(var i = 0; i < 15; i++) {
-			//generate the grass along the y-axis
-			for(var j = 0; j < 15; j++) {
-				grassType = Crafty.randRange(1, 4);
-				Crafty.e("2D, Canvas, grass"+grassType)
-					.attr({x: i * 40, y: j * 40});
-			}
-		}
-		
-		//create the bushes along the x-axis which will form the boundaries
-		for(var i = 0; i < 15; i++) {
-			Crafty.e("2D, Canvas, wall_top, bush"+Crafty.randRange(1,2))
-				.attr({x: i * 40, y: 0, z: 2});
-			Crafty.e("2D, DOM, wall_bottom, bush"+Crafty.randRange(1,2))
-				.attr({x: i * 40, y: 560, z: 2});
-		}
-		
-		//create the bushes along the y-axis
-		//we need to start one more and one less to not overlap the previous bushes
-		for(var i = 1; i < 15; i++) {
-			Crafty.e("2D, DOM, wall_left, bush"+Crafty.randRange(1,2))
-				.attr({x: 0, y: i * 40, z: 2});
-			Crafty.e("2D, Canvas, wall_right, bush"+Crafty.randRange(1,2))
-				.attr({x: 560, y: i * 40, z: 2});
-		}
-	}*/
 	
 	//the loading screen that will display while our assets load
 	Crafty.scene("loading", function() {
 		//load takes an array of assets and a callback when complete
-		Crafty.load(["img/grid/attackgrid.png"], function() {
-			Crafty.scene("main"); //when everything is loaded, run the main scene
-            Crafty.background("./img/grid/attackgrid.png");
-		});
+        Crafty.load(["img/sprite.png","img/grid/fullgrid.png"], function() {
+            Crafty.scene("main"); //when everything is loaded, run the main scene
+            Crafty.background("url('img/grid/fullgrid.png')");
+        });
 		
 		//black background with some loading text
 		Crafty.background("#000");
@@ -184,30 +128,6 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 	Crafty.scene("loading");
 	
 	Crafty.scene("main", function() {
-		Crafty.c('CustomControls', {
-			__move: {left: false, right: false, up: false, down: false},	
-			_speed: 40,
-			
-			CustomControls: function(speed) {
-				if(speed) this._speed = speed;
-				var move = this.__move;
-				/*
-				this.bind('enterframe', function() {
-					//move the player in a direction depending on the booleans
-					//only move the player in one direction at a time (up/down/left/right)
-					if(this.isDown("RIGHT_ARROW") && this.canMove) this.x += this._speed; 
-					else if(this.isDown("LEFT_ARROW") && this.canMove) this.x -= this._speed; 
-					else if(this.isDown("UP_ARROW") && this.canMove) this.y -= this._speed;
-					else if(this.isDown("DOWN_ARROW") && this.canMove) this.y += this._speed;
-				});
-				*/
-				return this;
-			}
-		});
-        
-		//generateWorld();
-		//create our player entity with some premade components
-        //player = Crafty.e("VoidJet");
         var unitsOnBoard = [],
             gameState = {};
         
@@ -323,15 +243,6 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
                 gameState.action = "";
                 gameStateLabel.text(changeLabel(gameState.action));
             }
-            
-            /*
-            var possibleSpots = possibleBlocks(block.row, block.column, 4);
-            var spotsAsString = "";
-            for(i=0;i<possibleSpots.length;i++){
-                spotsAsString+= "Row: " + possibleSpots[i].row + " Column: " + possibleSpots[i].column + "\n";
-            }
-            alert("Possible spots\n" + spotsAsString);
-            */
     	});
 	});
 };        
