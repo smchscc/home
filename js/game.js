@@ -202,7 +202,7 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 			CustomControls: function(speed) {
 				if(speed) this._speed = speed;
 				var move = this.__move;
-				
+				/*
 				this.bind('enterframe', function() {
 					//move the player in a direction depending on the booleans
 					//only move the player in one direction at a time (up/down/left/right)
@@ -211,14 +211,15 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
 					else if(this.isDown("UP_ARROW") && this.canMove) this.y -= this._speed;
 					else if(this.isDown("DOWN_ARROW") && this.canMove) this.y += this._speed;
 				});
-				
+				*/
 				return this;
 			}
 		});
 		generateWorld();
 		//create our player entity with some premade components
         //player = Crafty.e("VoidJet");
-        var unitsOnBoard = [];
+        var unitsOnBoard = [],
+            gameState = {};
         
         function newUnit(row,column,race) {
             var location = blockToPixels(row, column);
@@ -232,9 +233,9 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
             unitsOnBoard.splice(x,1);
         }
         
-        function moveUnitByIndex(x){    
-            var workingWith = unitsOnBoard[x];
-            workingWith.moveToTile(10,10);
+        function moveUnitByIndex(index,column,row){    
+            var workingWith = unitsOnBoard[index];
+            workingWith.moveToTile(column,row);
         }
         
         var x = 1;
@@ -244,8 +245,14 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
             x += 1;
             y += 1;
         }
+<<<<<<< HEAD
 
         moveUnitByIndex(3);
+=======
+        moveUnitByIndex(3,9,10);
+        var gameStateLabel = Crafty.e("2D, DOM, Text").attr({ x: 450, y: 510 });
+        
+>>>>>>> 057f82ef6dd83376a8e0cb119114b5df48a4fc11
         
         function blockToPixels(row,column){
             var x = column * 40;
@@ -259,6 +266,26 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
             var row = Math.floor(y / 40);
             return {column: column, row: row};
         };
+        
+        function changeLabel(x) {
+            switch(x) {
+                case "move" : 
+                    return "MOVE UNIT.";
+                break;
+                case "attack" : 
+                    return "ATTACK UNIT.";
+                break;
+                case "buy" : 
+                    return "BUILT UNIT.";
+                break;
+                case "capture" : 
+                    return "CAPTURED BASE.";
+                break;
+                default : 
+                    return "READY.";
+                break;
+            }
+        }
         
         function possibleBlocks(currentRow, currentColumn, maxBlocks){
             var valid_spots = [];
@@ -290,25 +317,33 @@ for(i =1; i <= CURRENT_MAX; i++){ //Calculates Edge
         }
         
         Crafty.addEvent(this, Crafty.stage.elem, "mousedown", function(e) {
-            block = pixelsToBlock(e.realX, e.realY);
-            player3;
+            // Gets the block that the player clicked on
+            var blockClickedOn = pixelsToBlock(e.realX, e.realY);
             
-            var block = pixelsToBlock(e.realX, e.realY);
-            var player3location = pixelsToBlock(player3._x, player3._y);
-            
-            if(player3location.column == block.column && player3location.row == block.row){
-                alert("You clicked on player 3");
+            if(gameState.action != "move"){
+                for(currentIndex = 0; currentIndex < unitsOnBoard.length; currentIndex++){
+                    var currentUnit = unitsOnBoard[currentIndex],
+                        currentUnitBlock = pixelsToBlock(currentUnit._x, currentUnit._y);
+                    if(currentUnitBlock.column == blockClickedOn.column && currentUnitBlock.row == blockClickedOn.row){
+                        gameState.selectedUnit = currentIndex;
+                        gameState.action = "move";
+                        gameStateLabel.text(changeLabel(gameState.action));
+                    }
+                }
+            } else if(gameState.action == "move"){
+                moveUnitByIndex(gameState.selectedUnit, blockClickedOn.column, blockClickedOn.row);
+                gameState.action = "";
+                gameStateLabel.text(changeLabel(gameState.action));
             }
             
-            if (player3location == block)
-            alert("Block is at row:" + block.row + " column:" + block.column);
-            
+            /*
             var possibleSpots = possibleBlocks(block.row, block.column, 4);
             var spotsAsString = "";
             for(i=0;i<possibleSpots.length;i++){
                 spotsAsString+= "Row: " + possibleSpots[i].row + " Column: " + possibleSpots[i].column + "\n";
             }
             alert("Possible spots\n" + spotsAsString);
+            */
     	});
 	});
 };        
