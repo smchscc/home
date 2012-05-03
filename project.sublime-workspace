@@ -3,10 +3,22 @@
 	{
 		"selected_items":
 		[
+			[
+				"text",
+				"text-align"
+			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "js/game.js",
+			"settings":
+			{
+				"buffer_size": 8539,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -32,10 +44,12 @@
 	},
 	"file_history":
 	[
+		"/C/Users/ITAdmin/home/js/game.js",
+		"/C/Users/ITAdmin/home/index.html"
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -49,6 +63,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"gameStateLabel",
+			"possibleBlocks",
+			"changeLabel",
+			"text",
+			"clickhandler",
+			"VoidJet"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -66,8 +86,37 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "js/game.js",
+					"settings":
+					{
+						"buffer_size": 8539,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5471,
+								5471
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2359.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -117,16 +166,16 @@
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 500.0,
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 380.0
 	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 184.0,
 	"status_bar_visible": true
 }

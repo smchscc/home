@@ -112,7 +112,7 @@
 	//the loading screen that will display while our assets load
 	Crafty.scene("loading", function() {
 		//load takes an array of assets and a callback when complete
-        Crafty.load(["img/sprite.png","img/grid/fullgrid.png"], function() {
+        Crafty.load(["img/sprite.png","img/grid/fullgrid.png","img/grid/sidebar.png"], function() {
             Crafty.scene("main"); //when everything is loaded, run the main scene
             Crafty.background("url('img/grid/fullgrid.png')");
         });
@@ -130,6 +130,8 @@
 	Crafty.scene("main", function() {
         var unitsOnBoard = [],
             gameState = {};
+
+
         
         function newUnit(row,column,race) {
             var location = blockToPixels(row, column);
@@ -145,11 +147,14 @@
         
         function moveUnitByIndex(index,column,row){    
             var workingWith = unitsOnBoard[index];
-            if(column <= 15 && row <= 15){
+            if(column <= 14 && row <= 14){
                 workingWith.moveToTile(column,row);
             }
         
         }
+
+        Crafty.e("2D, DOM, image").attr({w: 200, h: 600, x: 600, y: 0})
+            .image("img/grid/sidebar.png");
         
         var x = 1;
         var y = 1;
@@ -160,7 +165,7 @@
         }
 
         moveUnitByIndex(3,9,10);
-        var gameStateLabel = Crafty.e("2D, DOM, Text").attr({ x: 450, y: 510 });
+        var gameStateLabel = Crafty.e("2D, DOM, Text").attr({ x: 600, y: 10, w: 200}).css("text-align","center");
         
         function blockToPixels(row,column){
             var x = column * 40;
@@ -175,6 +180,10 @@
             return {column: column, row: row};
         };
         
+        var addUnitbutton = Crafty.e("2D, DOM, image").attr({w: 190, h: 80, x: 605, y: 30})
+            .image("img/grid/fullgrid.png"); 
+
+
         function changeLabel(x) {
             switch(x) {
                 case "move" : 
