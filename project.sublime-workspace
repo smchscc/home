@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"c",
+				"column"
+			],
+			[
+				"row",
+				"row"
+			],
+			[
+				"v",
+				"VoidInfantry"
+			],
+			[
+				"V",
+				"VoidTank"
+			],
+			[
 				"text",
 				"text-align"
 			]
@@ -15,7 +31,7 @@
 			"file": "js/game.js",
 			"settings":
 			{
-				"buffer_size": 8539,
+				"buffer_size": 9759,
 				"line_ending": "Windows"
 			}
 		}
@@ -94,15 +110,15 @@
 					"file": "js/game.js",
 					"settings":
 					{
-						"buffer_size": 8539,
+						"buffer_size": 9759,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5471,
-								5471
+								4876,
+								4876
 							]
 						],
 						"settings":
@@ -112,7 +128,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2359.0,
+						"translation.y": 2135.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

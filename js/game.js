@@ -14,13 +14,27 @@
         //note for graphics, the images of the alien head need to be moved down by one pixle in the sprite40.png file, a black pixle apears beneath each bush and the black outline of the alien head is cut off when it is facing up
     });
 
+
     Crafty.c  ("Unit", {
         _xPos : 0,
         _yPos : 0,
+        init: function(){
+            var unit = this;
+            unit.addComponent("2D, Canvas, Mouse, Controls, Animate, Collision")
+                .attr({w: 40, h:40});
+        },
         deductHealth: function(){},
         addMoney: function(){} ,
         destroy: function(){},
-        canMoveTo: function(){}
+        canMoveTo: function(){},
+        toggleMovement: function(){
+            var unit = this;
+            unit.canMove = !jet.canMove;
+        },
+        moveToTile: function(column, row){
+            var unit = this;
+            unit.attr({x: column * 40, y: row *40, z: 1});
+        }
     }); 
     Crafty.c  ("HumanInfantry", {
         _health: 90,
@@ -53,7 +67,13 @@
     Crafty.c ("VoidTank", {
         _health: 265,
         _speed: 5,
-        _damage: 130});
+        _damage: 130,
+        init : function(){
+            var tank = this;
+            tank.addComponent("Unit, Image")
+                .image("img/tank/tankhead_alien.png")
+                .attr({w:40,h:40});
+        }});
     Crafty.c ("HumanJet", {
         _health: 155,
         _speed: 10,
@@ -72,47 +92,14 @@
         _damage: 240,
         init: function() {
             var jet = this;
-            jet.addComponent("2D, Canvas, player, Mouse, Controls, Animate, Collision")
-    		.attr({x: 160, y: 144, z: 1})
-			.bind("enterframe", function(e) {
-				if (this.canMove){
-                    if(this.isDown("LEFT_ARROW")) {
-    				} else if(this.isDown("RIGHT_ARROW")) {
-    				} else if(this.isDown("UP_ARROW")) {
-    				} else if(this.isDown("DOWN_ARROW")) {
-    				}
-				}
-			}).bind("keyup", function(e) {
-				this.stop();
-			})
-			.collision()
-			.onHit("wall_left", function() {
-				this.x += jet._speed;
-				this.stop();
-			}).onHit("wall_right", function() {
-				this.x -= jet._speed;
-				this.stop();
-			}).onHit("wall_bottom", function() {
-				this.y -= jet._speed;
-				this.stop();
-			}).onHit("wall_top", function() {
-				this.y += jet._speed;
-				this.stop();
-            }).bind("click",function(){jet.canMove = !jet.canMove});
-    	},
-        toggleMovement: function(){
-                var jet = this;
-                jet.canMove = !jet.canMove;
-            },
-        moveToTile: function(column, row){
-            this.attr({x: column * 40, y: row *40, z: 1})
-            }
+            jet.addComponent("Unit, player");
+    	}
     });
 	
 	//the loading screen that will display while our assets load
 	Crafty.scene("loading", function() {
 		//load takes an array of assets and a callback when complete
-        Crafty.load(["img/sprite.png","img/grid/fullgrid.png","img/grid/sidebar.png"], function() {
+        Crafty.load(["img/sprite.png","img/grid/fullgrid.png","img/grid/sidebar.png","img/tank/tankhead_alien.png"], function() {
             Crafty.scene("main"); //when everything is loaded, run the main scene
             Crafty.background("url('img/grid/fullgrid.png')");
         });
@@ -146,14 +133,27 @@
         }
         
         function moveUnitByIndex(index,column,row){    
-            var workingWith = unitsOnBoard[index];
-            if(column <= 14 && row <= 14){
-                workingWith.moveToTile(column,row);
+            var workingWith = unitsOnBoard[index],
+                allowedToMove = true;
+            if(column >= 14 || row >= 14){
+                allowedToMove = false;
             }
+            for(var i = 0; i < unitsOnBoard.length; i++){
+                currentUnit = pixelsToBlock(unitsOnBoard[i]._x, unitsOnBoard[i]._y);
+                    if(currentUnit.row == row && currentUnit.column == column){
+                    allowedToMove = false;
+                }
+            }
+            if(allowedToMove){
+                workingWith.moveToTile(column,row);
+            } else {
+                alert("You can't move there");
+            }
+
         
         }
 
-        Crafty.e("2D, DOM, image").attr({w: 200, h: 600, x: 600, y: 0})
+        Crafty.e("2D, DOM, Image").attr({w: 200, h: 600, x: 600, y: 0})
             .image("img/grid/sidebar.png");
         
         var x = 1;
@@ -180,9 +180,25 @@
             return {column: column, row: row};
         };
         
-        var addUnitbutton = Crafty.e("2D, DOM, image").attr({w: 190, h: 80, x: 605, y: 30})
-            .image("img/grid/fullgrid.png"); 
-
+        var addUnitButton = Crafty.e("2D, DOM, Color, Mouse").attr({w: 190, h: 80, x: 605, y: 30})
+            .color("red")
+            .bind("click", function(e) {
+                var unit = prompt("What unit do you want? \n 1.Tank \n 2.Infantry \n 3.Jet","");
+                var row = prompt("What row would you like the unit?","");
+                row -= 1;
+                var column = prompt("What column would you like the unit?","");
+                column -= 1;
+                switch(unit) {
+                case "jet" : newUnit(row,column,"VoidJet");
+                break;
+                case "tank" : newUnit(row,column,"VoidTank");
+                break;
+                case "infantry" : newUnit(row,column,"VoidInfantry");
+                break;
+                default : alert("error not a unit");
+                break;
+            }
+            });
 
         function changeLabel(x) {
             switch(x) {
