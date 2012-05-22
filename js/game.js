@@ -51,7 +51,13 @@
     Crafty.c ("VoidInfantry", {
         _health: 95,
         _speed: 7,
-        _damage: 35});
+        _damage: 35,
+        init : function(){
+            var infantry = this;
+            infantry.addComponent("Unit, Color")
+                .color("yellow")
+                .attr({w:40,h:40});
+        }});
     Crafty.c ("HumanTank", {
         _health: 250, 
         _speed: 5,
@@ -70,8 +76,8 @@
         _damage: 130,
         init : function(){
             var tank = this;
-            tank.addComponent("Unit, Image")
-                .image("img/tank/tankhead_alien.png")
+            tank.addComponent("Unit, Color")
+                .color("red")
                 .attr({w:40,h:40});
         }});
     Crafty.c ("HumanJet", {
@@ -92,8 +98,11 @@
         _damage: 240,
         init: function() {
             var jet = this;
-            jet.addComponent("Unit, player");
-    	}
+            //jet.addComponent("Unit, player");
+    	},
+        uninit: function(){
+            this.removeComponent("Image");
+        }
     });
 	
 	//the loading screen that will display while our assets load
@@ -124,12 +133,15 @@
             var location = blockToPixels(row, column);
             var unit = Crafty.e(race)
             .attr({x: location.x, y: location.y, z: 2});
+            unit.addComponent("Unit, player");
             unitsOnBoard.push(unit);
         }
         
-        function removeUnitByIndex(x){    
-            unitsOnBoard[x].destroy();
+        function removeUnitByIndex(x){  
+            var unit =  unitsOnBoard[x];
             unitsOnBoard.splice(x,1);
+            unit.destroy();
+            
         }
         
         function moveUnitByIndex(index,column,row){    
@@ -251,20 +263,34 @@
         
         Crafty.addEvent(this, Crafty.stage.elem, "mousedown", function(e) {
             // Gets the block that the player clicked on
-            var blockClickedOn = pixelsToBlock(e.realX, e.realY);
-            
-            if(gameState.action != "move"){
-                for(currentIndex = 0; currentIndex < unitsOnBoard.length; currentIndex++){
-                    var currentUnit = unitsOnBoard[currentIndex],
-                        currentUnitBlock = pixelsToBlock(currentUnit._x, currentUnit._y);
-                    if(currentUnitBlock.column == blockClickedOn.column && currentUnitBlock.row == blockClickedOn.row){
-                        gameState.selectedUnit = currentIndex;
-                        gameState.action = "move";
-                        gameStateLabel.text(changeLabel(gameState.action));
-                    }
+            var blockClickedOn = pixelsToBlock(e.realX, e.realY),
+                unitClickedOn = null,
+                unitClickedOnIndex = null;
+            for(currentIndex = 0; currentIndex < unitsOnBoard.length; currentIndex++){
+                var currentUnit = unitsOnBoard[currentIndex],
+                    currentUnitBlock = pixelsToBlock(currentUnit._x, currentUnit._y);
+                if(currentUnitBlock.column == blockClickedOn.column && currentUnitBlock.row == blockClickedOn.row){
+                    unitClickedOn = currentUnit;
+                    unitClickedOnIndex = currentIndex;
                 }
-            } else if(gameState.action == "move"){
-                moveUnitByIndex(gameState.selectedUnit, blockClickedOn.column, blockClickedOn.row);
+            }
+
+            if(gameState.action != "selected"){
+                if(unitClickedOn != null){
+                    gameState.selectedUnit = unitClickedOn;
+                    gameState.selectedUnitIndex = unitClickedOnIndex;
+                    gameState.action = "selected";
+                    gameStateLabel.text(changeLabel(gameState.action));
+                }
+
+            } else if(gameState.action == "selected"){
+                if(unitClickedOn != null){
+                    removeUnitByIndex(unitClickedOnIndex);
+                } else {
+                    moveUnitByIndex(gameState.selectedUnitIndex, blockClickedOn.column, blockClickedOn.row);
+                }
+                gameState.selectedUnit = null;
+                gameState.selectedUnitIndex = null;
                 gameState.action = "";
                 gameStateLabel.text(changeLabel(gameState.action));
             }
