@@ -39,7 +39,7 @@
     Crafty.c("Highlight");
     Crafty.c  ("HumanInfantry", {
         _health: 90,
-        _speed: 7 ,
+        _speed: 7,
         _damage: 30});
     Crafty.c ("AlienInfantry", {
         _health: 80,
@@ -61,19 +61,19 @@
         }});
     Crafty.c ("HumanTank", {
         _health: 250, 
-        _speed: 5,
+        _speed: 2,
         _damage: 120});
     Crafty.c ("AlienTank", {
         _health: 225,
-        _speed: 5,
+        _speed: 2,
         _damage: 145});
     Crafty.c ("RobotTank", {
         _health: 280,
-        _speed: 5,
+        _speed: 2,
         _damage: 110});
     Crafty.c ("VoidTank", {
         _health: 265,
-        _speed: 5,
+        _speed: 2,
         _damage: 130,
         init : function(){
             var tank = this;
@@ -95,7 +95,7 @@
         _damage: 210});
     Crafty.c ("VoidJet", {
         _health: 170,
-        _speed: 40,
+        _speed: 6,
         _damage: 240,
         init: function() {
             var jet = this;
@@ -298,7 +298,7 @@
                     gameState.selectedUnitIndex = unitClickedOnIndex;
                     gameState.action = "selected";
                     gameStateLabel.text(changeLabel(gameState.action));
-                    valid_spots = possibleBlocks(blockClickedOn.row, blockClickedOn.column,4)
+                    valid_spots = possibleBlocks(blockClickedOn.row, blockClickedOn.column,gameState.selectedUnit._speed)
                     for(var i = 0; i < valid_spots.length; i++){
                         if(valid_spots[i].row < 15 && valid_spots[i].column < 15){
                         pixels = blockToPixels(valid_spots[i].row, valid_spots[i].column)
