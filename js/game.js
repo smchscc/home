@@ -35,7 +35,8 @@
             var unit = this;
             unit.attr({x: column * 40, y: row *40, z: 1});
         }
-    }); 
+    });
+    Crafty.c("Highlight");
     Crafty.c  ("HumanInfantry", {
         _health: 90,
         _speed: 7 ,
@@ -98,8 +99,13 @@
         _damage: 240,
         init: function() {
             var jet = this;
-            //jet.addComponent("Unit, player");
+            jet.addComponent("Unit, Color")
+                .color("green")
+                .attr({w:40,h:40});
     	},
+        kill: function(){
+            this.destroy();
+        },
         uninit: function(){
             this.removeComponent("Image");
         }
@@ -133,14 +139,14 @@
             var location = blockToPixels(row, column);
             var unit = Crafty.e(race)
             .attr({x: location.x, y: location.y, z: 2});
-            unit.addComponent("Unit, player");
+            //unit.addComponent("Unit, player");
             unitsOnBoard.push(unit);
         }
         
         function removeUnitByIndex(x){  
             var unit =  unitsOnBoard[x];
             unitsOnBoard.splice(x,1);
-            unit.destroy();
+            unit.kill();
             
         }
         
@@ -177,7 +183,8 @@
         }
 
         moveUnitByIndex(3,9,10);
-        var gameStateLabel = Crafty.e("2D, DOM, Text").attr({ x: 600, y: 10, w: 200}).css("text-align","center");
+        var gameStateLabel = Crafty.e("2D, DOM, Text").attr({ x: 600, y: 10, w: 200}).css("text-align","center").text("test");
+
         
         function blockToPixels(row,column){
             var x = column * 40;
@@ -192,8 +199,11 @@
             return {column: column, row: row};
         };
         
-        var addUnitButton = Crafty.e("2D, DOM, Color, Mouse").attr({w: 190, h: 80, x: 605, y: 30})
+
+        var gameInfoLabel = Crafty.e("2D, DOM, Text").attr({ x: 600, y: 500, w: 200, h: 100}).css("text-align","center");
+        var addUnitButton = Crafty.e("2D, DOM, Color, Mouse, Text").attr({w: 190, h: 80, x: 605, y: 50})
             .color("red")
+            .text("Add Unit")
             .bind("click", function(e) {
                 var unit = prompt("What unit do you want? \n 1.Tank \n 2.Infantry \n 3.Jet","");
                 var row = prompt("What row would you like the unit?","");
@@ -210,6 +220,13 @@
                 default : alert("error not a unit");
                 break;
             }
+            });
+
+        var infoButton = Crafty.e("2D, DOM, Color, Mouse, Text").attr({w: 190, h: 80, x: 605, y: 200})
+            .color("yellow")
+            .text("Unit Info")
+            .bind("click", function(e) {
+                gameInfoLabel.text("Unit Count: " + unitsOnBoard.length)
             });
 
         function changeLabel(x) {
@@ -235,7 +252,7 @@
         function possibleBlocks(currentRow, currentColumn, maxBlocks){
             var valid_spots = [];
             for(currentMax =1; currentMax <= maxBlocks; currentMax++){
-                for(i=1; i <= currentMax; i++){
+                for(i=0; i <= currentMax; i++){
                     var newColumn = currentColumn + i;
                     var newRow = currentRow + (currentMax - i);
                    if(!(newColumn <0) && !(newRow < 0)){
@@ -252,7 +269,7 @@
                     valid_spots.push({row:newRow,column:newColumn});
                     }
                     newColumn = currentColumn - i;
-                   newRow = currentRow - (currentMax + i);
+                   newRow = currentRow + (currentMax - i);
                    if(!(newColumn <0) && !(newRow < 0)){
                     valid_spots.push({row:newRow,column:newColumn});
                     }
@@ -281,6 +298,15 @@
                     gameState.selectedUnitIndex = unitClickedOnIndex;
                     gameState.action = "selected";
                     gameStateLabel.text(changeLabel(gameState.action));
+                    valid_spots = possibleBlocks(blockClickedOn.row, blockClickedOn.column,4)
+                    for(var i = 0; i < valid_spots.length; i++){
+                        if(valid_spots[i].row < 15 && valid_spots[i].column < 15){
+                        pixels = blockToPixels(valid_spots[i].row, valid_spots[i].column)
+                        Crafty.e("2D, DOM, Color, Highlight")
+                            .color("orange")
+                            .attr({w: 40, h: 40, x: pixels.x, y: pixels.y});
+                        }
+                    }
                 }
 
             } else if(gameState.action == "selected"){
@@ -289,6 +315,7 @@
                 } else {
                     moveUnitByIndex(gameState.selectedUnitIndex, blockClickedOn.column, blockClickedOn.row);
                 }
+                Crafty("Highlight").destroy();
                 gameState.selectedUnit = null;
                 gameState.selectedUnitIndex = null;
                 gameState.action = "";
